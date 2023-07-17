@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -20,6 +21,7 @@ def get_post_photo_form(request, form, success_url, template_path, pk=None):
     return render(request, template_path, context)
 
 
+@login_required
 def add_photo(request):
     if request.method == 'GET':
         form = PhotoCreateForm()
@@ -35,6 +37,7 @@ def add_photo(request):
     return render(request, 'photos/photo-add-page.html', context)
 
 
+@login_required
 def details_photo(request, pk):
     photo = Photo.objects.filter(pk=pk).get()
 
@@ -46,6 +49,7 @@ def details_photo(request, pk):
     return render(request, 'photos/photo-details-page.html', context)
 
 
+@login_required
 def edit_photo(request, pk):
     photo = Photo.objects.filter(pk=pk).get()
     return get_post_photo_form(
@@ -57,6 +61,7 @@ def edit_photo(request, pk):
     )
 
 
+@login_required
 def delete_photo(request, pk):
     photo = Photo.objects.filter(pk=pk).get()
     return get_post_photo_form(
@@ -66,4 +71,3 @@ def delete_photo(request, pk):
         template_path='photos/photo-delete-page.html',
         pk=pk,
     )
-

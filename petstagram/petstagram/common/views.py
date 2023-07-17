@@ -1,4 +1,5 @@
 import pyperclip
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, resolve_url
 from django.urls import reverse
 from pyperclip import copy
@@ -31,6 +32,7 @@ def index(request):
     return render(request, 'common/home-page.html', context)
 
 
+@login_required
 def like_photo(request, photo_id):
     user_liked_photos = get_user_liked_photos(photo_id)
     if user_liked_photos:
@@ -48,12 +50,14 @@ def like_photo(request, photo_id):
     # photo_like.save()
 
 
+@login_required
 def share_photo(request, photo_id):
     photo_details_url = reverse('details-photo', kwargs={'pk': photo_id})
     pyperclip.copy(photo_details_url)
     return redirect(get_photo_url(request, photo_id))
 
 
+@login_required
 def comment_photo(request, photo_id):
     photo = Photo.objects.filter(pk=photo_id).get()
 

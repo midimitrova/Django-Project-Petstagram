@@ -9,8 +9,9 @@
         <form action="{% url 'add-pet' %}" method="post">
             {{ form.as_p }}
             <!-- Add Pet Button -->
-            <button class="add-btn" type="submit">Add Pet</button>
             {% csrf_token %}
+            <button class="add-btn" type="submit">Add Pet</button>
+
         </form>
         <!-- End Add Pet Form -->
 
