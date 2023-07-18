@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 from petstagram.photos.models import Photo
+
+UserModel = get_user_model()
 
 
 class PhotoComment(models.Model):
@@ -25,6 +28,11 @@ class PhotoComment(models.Model):
         blank=True,
     )
 
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.DO_NOTHING,
+    )
+
 
 class PhotoLike(models.Model):
     photo = models.ForeignKey(
@@ -34,6 +42,7 @@ class PhotoLike(models.Model):
         null=False,
     )
 
-    # user = models.ForeignKey(
-    #     User
-    # )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.DO_NOTHING,
+    )
